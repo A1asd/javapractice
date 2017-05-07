@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -30,6 +32,8 @@ public class Main extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+        /*Commenting following block out, because this belongs to another tutorial!!
+        //First example begins here!
         gc.setFill(Color.RED);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(2);
@@ -38,9 +42,29 @@ public class Main extends Application {
         gc.strokeText( "Hello World!", 60, 50);
 
         Image datImage = new Image("samples/Ship/f1.png");
-        gc.drawImage(datImage, 180, 100);
+        gc.drawImage(datImage, 180, 100);*/
 
-        //primaryStage.setScene(new Scene(root, 300, 275));
+        //Second example begins here!
+        Image space = new Image("samples/Backgrounds/farback.gif");
+        Image rocket = new Image("samples/Ship/f1.png");
+        Image ufo = new Image("samples/Enemy/Example/e_f1.png");
+
+        final long startNanoTimer = System.nanoTime();
+
+        new AnimationTimer(){
+            public void handle(long currentNanoTime){
+                double t = (currentNanoTime - startNanoTimer) / 1000000000.0;
+
+                double x = 232 + 128 * Math.cos(t);
+                double y = 232 + 128 * Math.sin(t);
+
+                //Background image clears canvas
+                gc.drawImage(space, 0, 0);
+                gc.drawImage(rocket, x, y);
+                gc.drawImage(ufo, 196, 196);
+            }
+        }.start();
+
         primaryStage.show();
     }
 
